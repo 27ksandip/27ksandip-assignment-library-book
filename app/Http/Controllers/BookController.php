@@ -12,7 +12,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::orderBy('created_at', 'DESC')->with('author')->paginate(2);
+        $books = Book::orderBy('created_at', 'DESC')->with('author')->paginate(10);
         
         return $books->toResourceCollection();
     }
