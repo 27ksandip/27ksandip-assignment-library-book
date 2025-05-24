@@ -43,7 +43,7 @@ RESTful API for managing a list of books built with Laravel.
 #### Get all books
 
 ```http
-  GET /api/books
+GET /api/books
 ```
     {
         "data": [
@@ -65,7 +65,7 @@ RESTful API for managing a list of books built with Laravel.
 #### Get book item
 
 ```http
-  GET /api/books/${id}
+GET /api/books/${id}
 ```
 
 | Parameter | Type     | Description                       |
@@ -185,5 +185,3 @@ Yes, we can use service class also using service class is best approach to make 
 
 To generate readme file i have used this site 
 https://readme.so/
-
-
