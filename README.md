@@ -1,61 +1,189 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Library Book API
 
-## About Laravel
+RESTful API for managing a list of books built with Laravel.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- CRUD Operation: create, read, edit, update books
+- Input validation using laravel Request feature
+- Response data using laravel Resource Feature
+- Test data using Laravel Factory & Seeder
+- Unit test to ensure CRUD is working
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Project Setup
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+  clone project
+  git clone https://github.com/27ksandip/27ksandip-assignment-library-book.git
 
-### Premium Partners
+  cd 27ksandip-assignment-library-book
+```
+  ### Install Dependencies
+    composer install
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+  ### Copy .env 
+    cp .env.example .env
 
-## Contributing
+### Generate application key
+    php artisan key:generate
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Run migration with test data
+    php artisan migrate:fresh --seed
 
-## Code of Conduct
+### Run project
+    php artisan serve
+## API Reference
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Get all books
 
-## Security Vulnerabilities
+```http
+  GET /api/books
+```
+    {
+        "data": [
+            {
+                "id": 1,
+                "title": "Molestiae officiis natus quod vel rerum natus.",
+                "author": "Odie Towne",
+                "publication_year": 1538
+            },
+            {
+                "id": 2,
+                "title": "Illum asperiores ut aut soluta.",
+                "author": "Jalon Ratke Sr.",
+                "publication_year": 1992
+            }
+        ]
+    }
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### Get book item
 
-## License
+```http
+  GET /api/books/${id}
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
+
+    {
+        "id": 1,
+        "title": "Dr.",
+        "author": "Adah Kulas",
+        "publication_year": 1621
+    }
+
+#### Create Book
+
+```http
+POST /api/books
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `title`      | `string` | **Required**|
+| `author`      | `string` | **Required**|
+| `publication_year`      | `string` | **Required** between 1500 till now|
+
+    {
+        "title": "this is test book",
+        "author": "sandip",
+        "publication_year": "1600"
+    }
+
+    Validation error
+    {
+    "message": "The title field is required. (and 2 more errors)",
+    "errors": {
+        "title": [
+            "The title field is required."
+        ],
+        "author": [
+            "The author field is required."
+        ],
+        "publication_year": [
+            "The publication year field is required."
+        ]
+    }
+    
+
+#### Update Book
+
+```http
+PUT /api/books/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `title`      | `string` | **Required**|
+| `author`      | `string` | **Required**|
+| `publication_year`      | `string` | **Required** between 1500 till now|
+
+    {
+        "id": 1,
+        "title": "update title",
+        "author": "update author",
+        "publication_year": "1600",
+        "created_at": "2025-05-23T07:13:32.000000Z",
+        "updated_at": "2025-05-24T03:20:12.000000Z"
+    }
+
+#### Delete Book
+
+```http
+DELETE /api/books/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `requried` | **to get specific book item**|
+
+    {
+        "message": "Book deleted successfully."
+    }
+
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  php artisan test  
+```
+
+    PASS  Tests\Feature\BookApiTest
+    ✓ can create book                                                                                                                                   0.91s  
+    ✓ can create book validation error                                                                                                                  0.06s  
+    ✓ can list books                                                                                                                                    0.17s  
+    ✓ can show book                                                                                                                                     0.03s  
+    ✓ can update book                                                                                                                                   0.04s  
+    ✓ can delete book                                                                                                                                   0.03s  
+
+    Tests:    6 passed (20 assertions)
+    Duration: 1.71s
+
+## FAQ
+
+### Why used "BookResource"
+
+Resource if is very usefull when you want to transform data before sending to user, also its help to improvement on response load
+
+### Why did not used try catch
+
+According to my knowledge try and catch used when you are using third-party api or any complex query where you are not sure what happen next.
+In this book library we have validation on store request if any error happen it will catch by validation and if all data send accroding to validation it will create record
+
+### Can we use service class
+
+Yes, we can use service class also using service class is best approach to make clean controller and re-used query.
+## Used By
+
+To generate readme file i have used this site 
+https://readme.so/
+
+
